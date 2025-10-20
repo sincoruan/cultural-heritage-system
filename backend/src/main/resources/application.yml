@@ -1,0 +1,154 @@
+# 文化遗产管理与展示系统 - 应用配置文件
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: cultural-heritage-system
+
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/cultural_heritage?useUnicode=true&characterEncoding=utf8mb4&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useAffectedRows=true&characterSetResults=utf8mb4&connectionCollation=utf8mb4_unicode_ci&autoReconnect=true&failOverReadOnly=false&maxReconnects=10
+    username: heritage_user
+    password: heritage123
+    # 连接池配置
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 600000
+      pool-name: HeritageHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+  # JPA配置
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  # Redis配置
+  redis:
+    host: redis
+    port: 6379
+    password:
+    database: 0
+    timeout: 3000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
+      file-size-threshold: 2KB
+
+  # Jackson配置
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.heritage: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    path: logs
+    name: logs/heritage-system.log
+
+# JWT配置
+jwt:
+  secret: culturalHeritageSystemSecretKey2024ForJWTTokenGeneration
+  expiration: 604800
+  tokenHead: "Bearer "
+  tokenHeader: Authorization
+
+# 文件上传路径配置
+file:
+  upload:
+    path: /app/uploads
+    url-prefix: /uploads
+    max-file-size: 100MB
+    max-request-size: 100MB
+    # Windows系统使用: D:/uploads/
+    # Linux系统使用: /var/www/uploads/
+    base-path: ./uploads/
+    max-size: 52428800
+    allowed-extensions: jpg,jpeg,png,gif,bmp,mp4,avi,mov,3ds,obj,fbx,pdf,doc,docx
+
+# 系统配置
+system:
+  name: 文化遗产管理与展示系统
+  version: 1.0.0
+  copyright: Copyright © 2024
+  # 验证码配置
+  captcha:
+    enabled: true
+    type: math
+    # 验证码有效期（分钟）
+    expiration: 2
+  # 密码配置
+  password:
+    # 密码最大错误次数
+    max-retry-count: 5
+    # 密码锁定时间（分钟）
+    lock-time: 10
+
+# Swagger/Knife4j配置 - 暂时禁用
+knife4j:
+  enable: false
+  setting:
+    language: zh-CN
+  production: false
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+# 跨域配置
+cors:
+  allowed-origins: http://localhost:5173,http://localhost:3000
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  exposed-headers: Authorization
+  allow-credentials: true
+  max-age: 3600
+

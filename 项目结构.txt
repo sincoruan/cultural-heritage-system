@@ -1,0 +1,17 @@
+.
+./backend
+./backend/src
+./backend/src/main
+./database
+./docs
+./frontend
+./frontend/src
+./frontend/src/api
+./frontend/src/assets
+./frontend/src/components
+./frontend/src/router
+./frontend/src/store
+./frontend/src/types
+./frontend/src/utils
+./frontend/src/views
+./logs
